@@ -37,3 +37,6 @@ The second time it runs, it will not do anything, since the contents of `/Users/
 - Dockerize
 - Clean up back up files older than a specific time
   - Or keep latest version of a file for a single day perhaps
+
+## Version History
+2019-09-02: Initial commit and release 0.1, the first working version.
