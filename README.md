@@ -13,8 +13,6 @@ source-paths=/Users/kt/test
 target-path=/Volumes/pd/path-history
 ```
 
-- To quit, find the process id: `jps` and `kill #processId`
-
 ### Sample Run
 Imagine I have the file `/Users/kt/test/1.txt` with contents `Version - 1`. The first time `path-history` runs, it will create `/test/1.txt` under `/Volumes/pd/path-history` with contents `Version - 1`.
 The second time it runs, it will not do anything, since the contents of `/Users/kt/test/1.txt` has not changed. If I modify the file `1.txt`, imagine with contents `Version - 2`; the next time `path-history` runs,
@@ -23,7 +21,7 @@ The second time it runs, it will not do anything, since the contents of `/Users/
 `1.txt` with contents `Version - 2` and the previous version with name similar to `1-190901_122045` with contents `Version - 1`.
 
 ## How to Stop
-
+- To quit, find the process id: `jps` and `kill #processId`
 
 ## Planned Work
 - Parametrize schedule, which is fixed to 5 minutes currently 
