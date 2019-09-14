@@ -1,29 +1,50 @@
 package biz.tugay.pathHistory;
 
+import static java.nio.file.Paths.get;
+
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
 
-import static java.nio.file.Files.walkFileTree;
-import static java.nio.file.Paths.get;
-import static java.time.LocalDateTime.now;
-import static java.time.format.DateTimeFormatter.ofPattern;
-
+@Named
+@Singleton
 public class PathHistoryJob {
-    public void startJob(PathHistoryConfiguration pathHistoryConfiguration) {
-        ScheduledExecutorService es = Executors.newScheduledThreadPool(1);
-        es.scheduleAtFixedRate(() -> this.executeJob(pathHistoryConfiguration), 0, pathHistoryConfiguration.getBackupInterval(), TimeUnit.MINUTES);
-    }
 
-    private void executeJob(PathHistoryConfiguration pathHistoryConfiguration) {
-        String sourceDir = pathHistoryConfiguration.getSourcePath();
-        String targetDir = pathHistoryConfiguration.getTargetPath();
-        PathHistoryWalker pathHistoryWalker = new PathHistoryWalker(get(sourceDir), get(targetDir), ofPattern("YYMMdd_HHmmss").format(now()));
-        try {
-            walkFileTree(get(sourceDir), pathHistoryWalker);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+  PathHistoryConfiguration pathHistoryConfiguration;
+
+  ScheduledExecutorService es;
+
+  @Inject
+  public PathHistoryJob(PathHistoryConfiguration pathHistoryConfiguration) {
+    this.pathHistoryConfiguration = pathHistoryConfiguration;
+  }
+
+  public void startJob() {
+    es = Executors.newScheduledThreadPool(1);
+    es.scheduleAtFixedRate(this::executeJob, 0, pathHistoryConfiguration.getBackupInterval(),
+        TimeUnit.MINUTES);
+  }
+
+  public void stopJob() {
+    es.shutdown();
+    es = null;
+  }
+
+  private void executeJob() {
+    Path target = Paths.get(pathHistoryConfiguration.getTargetPath());
+    PathHistoryWalker pathHistoryWalker = new PathHistoryWalker(target);
+    try {
+      Path source = get(pathHistoryConfiguration.getSourcePath());
+      Files.walkFileTree(source, pathHistoryWalker);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
     }
+  }
 }
