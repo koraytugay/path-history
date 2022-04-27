@@ -25,12 +25,7 @@ public class PathHistoryWalker extends SimpleFileVisitor<Path> {
         this.timestamp = timestamp;
     }
 
-    public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
-        createDirectories(get(target + File.separator + dir));
-        return super.preVisitDirectory(dir, attrs);
-    }
-
-    @Override
+        @Override
     public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
         if (path.getFileName().toString().startsWith(".")) {
             return FileVisitResult.CONTINUE;
@@ -53,6 +48,11 @@ public class PathHistoryWalker extends SimpleFileVisitor<Path> {
         }
 
         return super.visitFile(path, attrs);
+    }
+
+    public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+        createDirectories(get(target + File.separator + dir));
+        return super.preVisitDirectory(dir, attrs);
     }
 
     private String timestamped(Path targetPath, String timestamp) {
