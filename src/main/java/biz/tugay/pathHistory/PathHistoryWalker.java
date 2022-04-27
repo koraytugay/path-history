@@ -19,6 +19,13 @@ public class PathHistoryWalker extends SimpleFileVisitor<Path> {
     Path source, target;
     String timestamp;
 
+        private String timestamped(Path targetPath, String timestamp) {
+        int dotIndex = targetPath.toString().lastIndexOf(".");
+        if (dotIndex == -1)
+            return targetPath.toString().concat("-").concat(timestamp);
+        return targetPath.toString().substring(0, dotIndex).concat("-").concat(timestamp).concat(targetPath.toString().substring(dotIndex));
+    }
+
     public PathHistoryWalker(Path source, Path target, String timestamp) {
         this.source = source;
         this.target = target;
@@ -55,11 +62,5 @@ public class PathHistoryWalker extends SimpleFileVisitor<Path> {
         return super.preVisitDirectory(dir, attrs);
     }
 
-    private String timestamped(Path targetPath, String timestamp) {
-        int dotIndex = targetPath.toString().lastIndexOf(".");
-        if (dotIndex == -1)
-            return targetPath.toString().concat("-").concat(timestamp);
-        return targetPath.toString().substring(0, dotIndex).concat("-").concat(timestamp).concat(targetPath.toString().substring(dotIndex));
-    }
 
 }
