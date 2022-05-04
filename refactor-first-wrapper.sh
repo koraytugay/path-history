@@ -31,7 +31,6 @@ function run() {
     return 0
   else
     echo "{ \"refactor-first\": { \"errors\": [\"failed to produce results for refactor-first\"] } }"
-    # echo "{ \"refactor-first\": { \"errors\": [\"failed to produce results for refactor-first\"], \"logs\": \"$(cat ./refactor_first_logs)\" } }"
     return 1
   fi
 }
