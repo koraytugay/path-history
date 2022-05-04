@@ -22,7 +22,7 @@ function tellVersion() {
 }
 
 function run() {
-  echo "!------ refactor-first-running ------!"
+  # echo "!------ refactor-first-running ------!"
   RESULTS='./target/site/refactor-first-data.json'
   mvn org.hjug.refactorfirst.plugin:refactor-first-maven-plugin:0.3.1-SNAPSHOT:jsonreport >> ./refactor_first_logs
 
