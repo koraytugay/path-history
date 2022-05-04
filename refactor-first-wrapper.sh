@@ -27,6 +27,7 @@ function run() {
 
   if [[ -f "$RESULTS" ]]
   then
+    echo "hello world"
     echo "{ \"refactor-first\": $(cat $RESULTS) }"
     return 0
   else
