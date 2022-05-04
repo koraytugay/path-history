@@ -27,8 +27,7 @@ function run() {
 
   if [[ -f "$RESULTS" ]]
   then
-    echo "hello world"
-    echo "{ \"refactor-first\": $(cat $RESULTS) }"
+    echo "{ \"my-refactor-first\": $(cat $RESULTS) }"
     return 0
   else
     echo "{ \"refactor-first\": { \"errors\": [\"failed to produce results for refactor-first\"] } }"
