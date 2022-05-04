@@ -1,2 +1,2 @@
-tools=["Bill of Materials"]
+tools=["bandit, clippy, closure-compiler, cobra, codenarc, detekt, errorprone, eslint, findsecbugs, golangci-lint, gosec, hadolint, hlint, infer, jshint, luacheck, psalm, pyre, rubocop, open source vulnerabilities, bill of materials, securityscan, semgrep, shellcheck, staticcheck"]
 customTools=["./refactor-first-wrapper.sh"]
