@@ -37,6 +37,10 @@ public class Test extends SimpleFileVisitor<Path> {
             return FileVisitResult.CONTINUE;
         }
 
+        if (path.getFileName().toString().startsWith(",")) {
+            return FileVisitResult.CONTINUE;
+        }
+
         Path targetPath = get(target + File.separator + path);
         if (exists(targetPath)) {
             try {
