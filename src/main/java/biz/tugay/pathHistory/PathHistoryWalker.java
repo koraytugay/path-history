@@ -31,13 +31,6 @@ public class PathHistoryWalker extends SimpleFileVisitor<Path> {
         this.timestamp = timestamp;
     }
 
-    private String timestamped(Path targetPath, String timestamp) {
-        int dotIndex = targetPath.toString().lastIndexOf(".");
-        if (dotIndex == -1)
-            return targetPath.toString().concat("-").concat(timestamp);
-        return targetPath.toString().substring(0, dotIndex).concat("-").concat(timestamp).concat(targetPath.toString().substring(dotIndex));
-    }
-
     @Override
     public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
         if (path.getFileName().toString().startsWith(".")) {
@@ -61,5 +54,12 @@ public class PathHistoryWalker extends SimpleFileVisitor<Path> {
         }
 
         return super.visitFile(path, attrs);
+    }    
+    
+    private String timestamped(Path targetPath, String timestamp) {
+        int dotIndex = targetPath.toString().lastIndexOf(".");
+        if (dotIndex == -1)
+            return targetPath.toString().concat("-").concat(timestamp);
+        return targetPath.toString().substring(0, dotIndex).concat("-").concat(timestamp).concat(targetPath.toString().substring(dotIndex));
     }
 }
