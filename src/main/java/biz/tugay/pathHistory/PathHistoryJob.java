@@ -13,12 +13,7 @@ import static java.time.LocalDateTime.now;
 import static java.time.format.DateTimeFormatter.ofPattern;
 
 public class PathHistoryJob {
-    public void startJob() {
-        ScheduledExecutorService es = Executors.newScheduledThreadPool(1);
-        es.scheduleAtFixedRate(this::executeJob, 0, 2, TimeUnit.MINUTES);
-    }
-
-    private void executeJob() {
+     private void executeJob() {
         try (FileInputStream is = new FileInputStream("path-history.properties")) {
             Properties properties = new Properties();
             properties.load(is);
@@ -32,5 +27,9 @@ public class PathHistoryJob {
             e.printStackTrace();
         }
     }
-
+    
+    public void startJob() {
+        ScheduledExecutorService es = Executors.newScheduledThreadPool(1);
+        es.scheduleAtFixedRate(this::executeJob, 0, 2, TimeUnit.MINUTES);
+    }
 }
